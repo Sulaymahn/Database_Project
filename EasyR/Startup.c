@@ -188,7 +188,7 @@ FunctionalDependencyList* GetAttributeFunctionalDependency(AttributeList* attrib
 		}
 
 		Attribute* otherAttribute = GetAttributeByName(attributeList, otherAttributeName);
-		if (otherAttribute != NULL) {
+		if (otherAttribute != NULL && !IsSameAttribute(*otherAttribute, *attribute)) {
 			FunctionalDependency funcDependency = { attribute, otherAttribute };
 			list = AddFunctionalDependency(list, funcDependency);
 		}
@@ -209,6 +209,9 @@ FunctionalDependencyList* GetAllAttributesFunctionalDependency(AttributeList* li
 }
 
 AttributeList* CalculateClosure(FunctionalDependencyList* list, Attribute* attribute) {
+	if (list == NULL) {
+		return NULL;
+	}
 	FunctionalDependencyListNode* tmp = list->Head;
 	AttributeList* result = NULL;
 	while (tmp != NULL) {
@@ -235,7 +238,7 @@ void GetClosure(AttributeList* attributes, FunctionalDependencyList* dependencie
 	printf("What attribute do you want closure calculation? : ");
 	char* nameofAttributeToFind = (char*)malloc(sizeof(char));
 	int dmp = scanf("%s", nameofAttributeToFind);
-	printf("{%s}+ = ", nameofAttributeToFind);
+	printf("The closure \"{%s}+\" = ", nameofAttributeToFind);
 	ATTRIBUTETOFIND = GetAttributeByName(attributes, nameofAttributeToFind);
 	if (ATTRIBUTETOFIND != NULL) {
 		AttributeList* self = AddAttribute(NULL, *ATTRIBUTETOFIND);
