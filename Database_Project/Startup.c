@@ -55,6 +55,7 @@ FunctionalDependencyList* AddFunctionalDependency(FunctionalDependencyList* list
 		list->Tail->Next = node;
 		list->Tail = node;
 	}
+	return list;
 }
 
 AttributeList* AddAttribute(AttributeList* list, Attribute attribute) {
@@ -206,6 +207,7 @@ void PrintList(AttributeList* list) {
 }
 
 int main() {
+	printf("EasyR mapper\n");
 	AttributeList* attributes = GetAttributesFromUser();
 	PrintList(attributes);
 	FunctionalDependencyList* dependencies = GetAllAttributesFunctionalDependency(attributes);
