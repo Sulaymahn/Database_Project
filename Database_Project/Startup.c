@@ -134,7 +134,7 @@ bool AttributeExists(AttributeList* list, Attribute attribute) {
 }
 
 AttributeList* GetAttributesFromUser() {
-	printf("How many attributes do you want to define: ");
+	printf("How many attributes for this relation? : ");
 
 	int n;
 	scanf("%d", &n);
@@ -165,8 +165,10 @@ FunctionalDependencyList* GetAttributeFunctionalDependency(AttributeList* attrib
 		}
 
 		Attribute* otherAttribute = GetAttributeByName(attributeList, otherAttributeName);
-		FunctionalDependency funcDependency = { attribute, otherAttribute };
-		list = AddFunctionalDependency(list, funcDependency);
+		if (otherAttribute != NULL) {
+			FunctionalDependency funcDependency = { attribute, otherAttribute };
+			list = AddFunctionalDependency(list, funcDependency);
+		}
 
 		printf("%s -> ", attribute->Name);
 	}
@@ -211,7 +213,7 @@ int main() {
 	AttributeList* attributes = GetAttributesFromUser();
 	PrintList(attributes);
 	FunctionalDependencyList* dependencies = GetAllAttributesFunctionalDependency(attributes);
-	printf("Provide the attribute that requires closure calculation: ");
+	printf("What attribute do you want closure calculation? : ");
 	char nameofAttributeToFind[8];
 	scanf("%s", nameofAttributeToFind);
 	Attribute* attributeToFind;
