@@ -211,7 +211,6 @@ void PrintList(AttributeList* list) {
 int main() {
 	printf("EasyR mapper\n");
 	AttributeList* attributes = GetAttributesFromUser();
-	PrintList(attributes);
 	FunctionalDependencyList* dependencies = GetAllAttributesFunctionalDependency(attributes);
 	printf("What attribute do you want closure calculation? : ");
 	char nameofAttributeToFind[8];
