@@ -213,12 +213,11 @@ int main() {
 	AttributeList* attributes = GetAttributesFromUser();
 	FunctionalDependencyList* dependencies = GetAllAttributesFunctionalDependency(attributes);
 	printf("What attribute do you want closure calculation? : ");
-	char nameofAttributeToFind[8];
+	char* nameofAttributeToFind;
 	scanf("%s", nameofAttributeToFind);
 	Attribute* attributeToFind;
 	attributeToFind = GetAttributeByName(attributes, nameofAttributeToFind);
 	if (attributeToFind != NULL) {
-		printf("Finish line");
 		AttributeList* closure = CalculateClosure(dependencies, attributeToFind);
 		PrintList(closure);
 	}
