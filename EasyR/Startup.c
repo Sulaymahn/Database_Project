@@ -35,6 +35,7 @@ typedef struct FunctionalDependencyList {
 } FunctionalDependencyList;
 
 Attribute* ATTRIBUTETOFIND;
+int SCANFDMP;
 
 bool IsSameAttribute(Attribute a, Attribute b) {
 	if (strcmp(a.Name, b.Name) == 0) {
@@ -160,14 +161,14 @@ AttributeList* GetAttributesFromUser() {
 	printf("How many attributes for this relation? : ");
 
 	int n;
-	scanf("%d", &n);
+	SCANFDMP = scanf("%d", &n);
 
 	AttributeList* list = NULL;
 
 	for (int i = 0; i < n; i++) {
 		printf("%d. Attribute name: ", i + 1);
 		char* name = (char*)malloc(sizeof(char));
-		scanf("%s", name);
+		SCANFDMP = scanf("%s", name);
 		Attribute attribute = { name };
 		list = AddAttribute(list, attribute);
 	}
@@ -177,12 +178,12 @@ AttributeList* GetAttributesFromUser() {
 
 FunctionalDependencyList* GetAttributeFunctionalDependency(AttributeList* attributeList, Attribute* attribute)
 {
-	char otherAttributeName[50];
+	char* otherAttributeName = (char*)malloc(sizeof(char));
 	FunctionalDependencyList* list = NULL;
 	printf("Define the functional dependencies of %s\nWrite the name of the other attributes\nusage: [Attribute]->[OtherAttribute]\nType \"exit()\" to proceed\n", attribute->Name);
 	printf("%s -> ", attribute->Name);
 	while (true) {
-		scanf("%s", otherAttributeName);
+		SCANFDMP = scanf("%s", otherAttributeName);
 		if (strcmp(otherAttributeName, "exit()") == 0) {
 			break;
 		}
