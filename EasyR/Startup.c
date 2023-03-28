@@ -231,10 +231,7 @@ void PrintList(AttributeList* list) {
 	printf("}\n");
 }
 
-int main() {
-	printf("EasyR mapper\n");
-	AttributeList* attributes = GetAttributesFromUser();
-	FunctionalDependencyList* dependencies = GetAllAttributesFunctionalDependency(attributes);
+void GetClosure(AttributeList* attributes, FunctionalDependencyList* dependencies) {
 	printf("What attribute do you want closure calculation? : ");
 	char* nameofAttributeToFind = (char*)malloc(sizeof(char));
 	int dmp = scanf("%s", nameofAttributeToFind);
@@ -245,5 +242,16 @@ int main() {
 		AttributeList* closure = AppendAttributeList(self, CalculateClosure(dependencies, ATTRIBUTETOFIND));
 		PrintList(closure);
 	}
+}
+
+void PrintIntro() {
+	printf("EasyR Mapper\n");
+}
+
+int main() {
+	PrintIntro();
+	AttributeList* attributes = GetAttributesFromUser();
+	FunctionalDependencyList* dependencies = GetAllAttributesFunctionalDependency(attributes);
+	GetClosure(attributes, dependencies);
 	return 0;
 }

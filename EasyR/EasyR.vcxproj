@@ -25,7 +25,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{da1c3d88-50ef-4993-a604-a564b08afbcc}</ProjectGuid>
-    <RootNamespace>DatabaseProject</RootNamespace>
+    <RootNamespace>EasyR</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
