@@ -34,6 +34,8 @@ typedef struct FunctionalDependencyList {
 	struct FunctionalDependencyListNode* Tail;
 } FunctionalDependencyList;
 
+Attribute* ATTRIBUTETOFIND;
+
 bool IsSameAttribute(Attribute a, Attribute b) {
 	if (strcmp(a.Name, b.Name) == 0) {
 		return true;
@@ -189,7 +191,7 @@ AttributeList* CalculateClosure(FunctionalDependencyList* list, Attribute* attri
 	FunctionalDependencyListNode* tmp = list->Head;
 	AttributeList* result = NULL;
 	while (tmp != NULL) {
-		if (tmp->Value.lhs == attribute && tmp->Value.rhs != attribute) {
+		if ((tmp->Value.lhs == attribute) && (tmp->Value.rhs != ATTRIBUTETOFIND)) {
 			result = AddAttribute(result, *tmp->Value.rhs);
 			result = AppendAttributeList(result, CalculateClosure(list, tmp->Value.rhs));
 		}
@@ -215,11 +217,11 @@ int main() {
 	printf("What attribute do you want closure calculation? :");
 	char* nameofAttributeToFind = (char*)malloc(sizeof(char));
 	int dmp = scanf("%s", nameofAttributeToFind);
-	printf("{%s}+\n", nameofAttributeToFind);
-	Attribute* attributeToFind = GetAttributeByName(attributes, nameofAttributeToFind);
-	if (attributeToFind != NULL) {
-		AttributeList* self = AddAttribute(NULL, *attributeToFind);
-		AttributeList* closure = AppendAttributeList(self, CalculateClosure(dependencies, attributeToFind));
+	printf("{%s}+ = ", nameofAttributeToFind);
+	ATTRIBUTETOFIND = GetAttributeByName(attributes, nameofAttributeToFind);
+	if (ATTRIBUTETOFIND != NULL) {
+		AttributeList* self = AddAttribute(NULL, *ATTRIBUTETOFIND);
+		AttributeList* closure = AppendAttributeList(self, CalculateClosure(dependencies, ATTRIBUTETOFIND));
 		PrintList(closure);
 	}
 	return 0;
