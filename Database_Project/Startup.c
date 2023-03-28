@@ -214,9 +214,8 @@ int main() {
 	FunctionalDependencyList* dependencies = GetAllAttributesFunctionalDependency(attributes);
 	printf("What attribute do you want closure calculation? : ");
 	char* nameofAttributeToFind = (char*)malloc(sizeof(char));
-	scanf("%s", nameofAttributeToFind);
-	Attribute* attributeToFind;
-	attributeToFind = GetAttributeByName(attributes, nameofAttributeToFind);
+	int dmp = scanf("%s", nameofAttributeToFind);
+	Attribute* attributeToFind = GetAttributeByName(attributes, nameofAttributeToFind);
 	if (attributeToFind != NULL) {
 		AttributeList* closure = CalculateClosure(dependencies, attributeToFind);
 		PrintList(closure);
