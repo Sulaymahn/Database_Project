@@ -200,24 +200,26 @@ AttributeList* CalculateClosure(FunctionalDependencyList* list, Attribute* attri
 
 void PrintList(AttributeList* list) {
 	AttributeListNode* tmp = list->Head;
-	printf("[");
+	printf("{");
 	while (tmp != NULL) {
 		printf(" %s ", tmp->Value.Name);
 		tmp = tmp->Next;
 	}
-	printf("]\n");
+	printf("}\n");
 }
 
 int main() {
 	printf("EasyR mapper\n");
 	AttributeList* attributes = GetAttributesFromUser();
 	FunctionalDependencyList* dependencies = GetAllAttributesFunctionalDependency(attributes);
-	printf("What attribute do you want closure calculation? : ");
+	printf("What attribute do you want closure calculation? :");
 	char* nameofAttributeToFind = (char*)malloc(sizeof(char));
 	int dmp = scanf("%s", nameofAttributeToFind);
+	printf("{%s}+\n", nameofAttributeToFind);
 	Attribute* attributeToFind = GetAttributeByName(attributes, nameofAttributeToFind);
 	if (attributeToFind != NULL) {
-		AttributeList* closure = CalculateClosure(dependencies, attributeToFind);
+		AttributeList* self = AddAttribute(NULL, *attributeToFind);
+		AttributeList* closure = AppendAttributeList(self, CalculateClosure(dependencies, attributeToFind));
 		PrintList(closure);
 	}
 	return 0;
