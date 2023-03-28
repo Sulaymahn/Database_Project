@@ -245,6 +245,9 @@ void GetClosure(AttributeList* attributes, FunctionalDependencyList* dependencie
 		AttributeList* closure = AppendAttributeList(self, CalculateClosure(dependencies, ATTRIBUTETOFIND));
 		PrintList(closure);
 	}
+	else {
+		printf("Attribute does not exist");
+	}
 }
 
 void PrintIntro() {
