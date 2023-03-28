@@ -42,6 +42,27 @@ bool IsSameAttribute(Attribute a, Attribute b) {
 	}
 	return false;
 }
+bool IsSameFunctionalDependency(FunctionalDependency a, FunctionalDependency b) {
+	if (IsSameAttribute(*a.lhs, *b.lhs) && IsSameAttribute(*a.rhs, *b.rhs)) {
+		return true;
+	}
+	return false;
+}
+
+bool FunctionalDependencyExist(FunctionalDependencyList* list, FunctionalDependency dependency) {
+	if (list != NULL) {
+		FunctionalDependencyListNode* tmp = list->Head;
+		while (tmp != NULL)
+		{
+			if (IsSameFunctionalDependency(tmp->Value, dependency)) {
+				return true;
+			}
+			tmp = tmp->Next;
+		}
+		return false;
+	}
+	return false;
+}
 
 FunctionalDependencyList* AddFunctionalDependency(FunctionalDependencyList* list, FunctionalDependency dependency) {
 	FunctionalDependencyListNode* node = (FunctionalDependencyListNode*)malloc(sizeof(FunctionalDependencyListNode));
@@ -53,7 +74,7 @@ FunctionalDependencyList* AddFunctionalDependency(FunctionalDependencyList* list
 		result->Tail = node;
 		list = result;
 	}
-	else {
+	else if (!FunctionalDependencyExist(list, dependency)) {
 		list->Tail->Next = node;
 		list->Tail = node;
 	}
@@ -191,7 +212,7 @@ AttributeList* CalculateClosure(FunctionalDependencyList* list, Attribute* attri
 	FunctionalDependencyListNode* tmp = list->Head;
 	AttributeList* result = NULL;
 	while (tmp != NULL) {
-		if ((tmp->Value.lhs == attribute) && (tmp->Value.rhs != ATTRIBUTETOFIND)) {
+		if ((tmp->Value.lhs == attribute) && (tmp->Value.rhs != ATTRIBUTETOFIND) && (tmp->Value.rhs != attribute)) {
 			result = AddAttribute(result, *tmp->Value.rhs);
 			result = AppendAttributeList(result, CalculateClosure(list, tmp->Value.rhs));
 		}
@@ -214,7 +235,7 @@ int main() {
 	printf("EasyR mapper\n");
 	AttributeList* attributes = GetAttributesFromUser();
 	FunctionalDependencyList* dependencies = GetAllAttributesFunctionalDependency(attributes);
-	printf("What attribute do you want closure calculation? :");
+	printf("What attribute do you want closure calculation? : ");
 	char* nameofAttributeToFind = (char*)malloc(sizeof(char));
 	int dmp = scanf("%s", nameofAttributeToFind);
 	printf("{%s}+ = ", nameofAttributeToFind);
